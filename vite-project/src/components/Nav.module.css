@@ -1,0 +1,19 @@
+.header {
+    display: flex;
+    justify-content: center;
+    font-family: sans-serif;
+}
+
+.link {
+    margin: 5px 20px;
+}
+.active {
+    background-color: blueviolet;
+    color: white;
+    padding: 7px;
+    border-radius: 5px;
+}
+.play, .circle{
+    font-size: 30px;
+    padding: 0px;
+}

@@ -1,0 +1,15 @@
+.clock{
+    font-size: 5em;
+    display: flex;
+    justify-content: center;
+    font-weight: 900;
+    color:white;
+    text-shadow: 1px 1px 2px rgb(191, 185, 242), 0 0 1em rgb(44, 3, 66), 0 0 0.2em rgb(100, 50, 160);
+    background-color:rgb(231, 208, 252);
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+}
+span{
+    margin-right: 20px;
+}

@@ -1,0 +1,36 @@
+.btn {
+    border: none;
+    border-radius: 5px;
+    width: 50px;
+    height: 30px;
+}
+
+.btns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:20px;
+}
+
+.stopwatch {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    font-size: 50px;
+}
+.span{
+    background-color: rgb(230, 228, 228);
+    padding: 5px;
+    border-radius: 2px;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+.btn{
+    font-size: 20px;
+    width: 90px;
+    height: 40px;
+    background-color: blueviolet;
+    color:white
+}
