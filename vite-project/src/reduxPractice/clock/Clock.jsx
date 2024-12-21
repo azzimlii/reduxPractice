@@ -5,9 +5,8 @@ export default function Clock() {
         hours: new Date().getHours(),
         minutes: new Date().getMinutes(),
         seconds: new Date().getSeconds(),
-      });
-
-    useEffect(()=>{
+    });
+    useEffect(() => {
         setInterval(() => {
             let now = new Date()
             setTime({
@@ -16,16 +15,14 @@ export default function Clock() {
                 seconds: now.getSeconds(),
             })
         }, 1000);
-    },[])
-
+    }, [])
     return (
         <>
-        <div className={css.clock}>
-            {/* {time.hours}   {time.minutes}   {time.seconds} */}
-        <span>{(time.hours <= 9 ? "0" : "") + time.hours} </span>: 
-        <span>{(time.minutes <= 9 ? "0" : "") + time.minutes} </span>:
-        <span> {(time.seconds <= 9 ? "0" : "") + time.seconds}</span>
-        </div>
+            <div className={css.clock}>
+                <span>{(time.hours <= 9 ? "0" : "") + time.hours} </span>:
+                <span>{(time.minutes <= 9 ? "0" : "") + time.minutes} </span>:
+                <span> {(time.seconds <= 9 ? "0" : "") + time.seconds}</span>
+            </div>
         </>
     )
 }

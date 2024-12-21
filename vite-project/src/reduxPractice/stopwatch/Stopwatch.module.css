@@ -34,3 +34,15 @@
     background-color: blueviolet;
     color:white
 }
+h4{
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    justify-content: center;
+}
+li{
+    list-style-type: none;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+}

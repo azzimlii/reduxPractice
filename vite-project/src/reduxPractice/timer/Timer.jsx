@@ -1,104 +1,45 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import css from "./Timer.module.css"
+import { useDispatch, useSelector } from 'react-redux';
+import { minusHours, minusMinutes, minusSeconds, plusHours, plusMinutes, plusSeconds, process, savePastTime } from '../../features/timerSlice';
 export default function Timer() {
-
-    const [state, setState] = useState({
-        hours: 0,
-        minutes: 0,
-        seconds: 0
-    });
-    const [stop, setStop] = useState(false);
-    const handler = () => {
-        setStop(!stop);
-    };
-    const handlerReset=()=>{
-        setState({
-            hours: 0,
-            minutes: 0,
-            seconds: 0
-        })
-    }
-    const handlerClickHours = () => {
-        setState((prev) => ({ ...prev, hours: prev.hours + 1 }));
-    }
-    const handlerClickMinutes = () => {
-        if (state.minutes > 59) {
-            setState((prev) => ({ ...prev, hours: prev.hours + 1, minutes: 0 }))
-        } else if (state.minutes === 59) {
-            setState((prev) => ({ ...prev, hours: prev.hours + 1, minutes: 0 }))
-        } else {
-            setState((prev) => ({ ...prev, minutes: prev.minutes + 1 }))
-        }
-    }
-    const handlerClickSeconds = () => {
-        // setState((prev)=>({...prev, seconds:prev.seconds+1}));
-        if (state.seconds > 59) {
-            setState((prev) => ({ ...prev, minutes: prev.minutes + 1, seconds: 0 }))
-        } else if (state.minutes === 59) {
-            setState((prev) => ({ ...prev, hours: prev.hours + 1, minutes: 0, seconds: 0 }))
-        } else if (state.seconds === 59) {
-            setState((prev) => ({ ...prev, seconds: 0, minutes: prev.minutes + 1 }))
-        }
-        else {
-            setState((prev) => ({ ...prev, seconds: prev.seconds + 1 }))
-        }
-    }
+    const { hours, minutes, seconds, stop, pastOfTimer } = useSelector((state) => state.timer);
+    const dispatch = useDispatch();
     useEffect(() => {
         let interval;
-
         if (stop) {
+            dispatch(savePastTime())
             interval = setInterval(() => {
-                setState((prev) => {
-                    let { hours, minutes, seconds } = prev;
-                    if (seconds > 0) {
-                        seconds -= 1;
-                    } else if (minutes > 0) {
-                        minutes -= 1;
-                        seconds = 59;
-                    } else if (hours > 0) {
-                        hours -= 1;
-                        minutes = 59;
-                        seconds = 59;
-                    } else {
-                        clearInterval(interval);
-                        alert("vaxt bitdi");
-                        setStop(false);
-                    }
-
-                    return { hours, minutes, seconds };
-                });
+                dispatch(process());
             }, 1000);
         }
-
         return () => clearInterval(interval);
     }, [stop]);
-
     return (
         <>
             <div className={css.timer}>
                 <div className={css.time}>
-                <span className={css.span} onClick={handlerClickHours}>{(state.hours <= 9 ? "0" : "") + state.hours}</span>
-                <div className={css.buttons}>
-                    <button className={css.btnMini}>+</button>
-                    <button className={css.btnMini}>-</button>
+                    <span className={css.span} >{(hours <= 9 ? "0" : "") + hours}</span>
+                    <div className={css.buttons}>
+                        <button className={css.btnMini} onClick={() => dispatch(plusHours())}>+</button>
+                        <button className={css.btnMini} onClick={() => dispatch(minusHours())}>-</button>
+                    </div>
+                    <span className={css.span} >{(minutes <= 9 ? "0" : "") + minutes}</span>
+                    <div className={css.buttons}>
+                        <button className={css.btnMini} onClick={() => dispatch(plusMinutes())}>+</button>
+                        <button className={css.btnMini} onClick={() => dispatch(minusMinutes())}>-</button>
+                    </div>
+                    <span className={css.span} > {(seconds <= 9 ? "0" : "") + seconds}</span>
+                    <div className={css.buttons}>
+                        <button className={css.btnMini} onClick={() => dispatch(plusSeconds())}>+</button>
+                        <button className={css.btnMini} onClick={() => dispatch(minusSeconds())}>-</button>
+                    </div>
                 </div>
-                <span className={css.span} onClick={handlerClickMinutes}>{(state.minutes <= 9 ? "0" : "") + state.minutes}</span>
-                <div className={css.buttons}>
-                    <button className={css.btnMini}>+</button>
-                    <button className={css.btnMini}>-</button>
-                </div>
-                <span className={css.span} onClick={handlerClickSeconds}> {(state.seconds <= 9 ? "0" : "") + state.seconds}</span>
-                <div className={css.buttons}>
-                    <button className={css.btnMini}>+</button>
-                    <button className={css.btnMini}>-</button>
-                </div>
-                </div>
-                {/* <div className={css.btns}>
-                <button className={css.btn} onClick={handler}>
-                    {stop ? "Pauza" : "Başlat"}
-                </button>
-                <button className={css.btn} onClick={handlerReset}>Reset</button>
-                </div> */}
+                <ul>
+                    {pastOfTimer.map((time, index) => (
+                        <li key={index}>{time}</li>
+                    ))}
+                </ul>
             </div>
         </>
     )
